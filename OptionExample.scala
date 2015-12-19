@@ -16,7 +16,8 @@ object OptionExample {
   def getMostPopularRepository(user: GithubUser): Option[GithubRepository] = for {
     json <- getResponseBody(GithubClient.repos(user.name))
     repos <- json.decodeOption[List[GithubRepository]]
-  } yield repos.maxBy(_.stars)
+    mostPopularRepo <- repos.reduceLeftOption((best, curr) => if (curr.stars > best.stars) curr else best)
+  } yield mostPopularRepo
 
   def getBiggestContributor(repository: GithubRepository): Option[GithubUser] = {
     None
