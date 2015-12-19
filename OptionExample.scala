@@ -22,9 +22,14 @@ object OptionExample {
     mostPopularRepo <- repos.reduceLeftOption((best, curr) => if (curr.stars > best.stars) curr else best)
   } yield mostPopularRepo
 
-  def getBiggestContributor(repository: GithubRepository): Option[GithubUser] = {
-    None
-  }
+  def getBiggestContributor(repository: GithubRepository): Option[GithubContributor] = for {
+    // make request to gh
+    json <- getResponseBody(GithubClient.repoContributors(repository.owner.name, repository.name))
+    // parse json
+    contributors <- json.decodeOption[List[GithubContributor]]
+    // Find the one with the most contributons
+    biggestContributor <- contributors.reduceLeftOption((best, curr) => if (curr.contributions > best.contributions) curr else best)
+  } yield biggestContributor
 
   def run() {
     println("Looking for the biggest contibutor using Option")
@@ -33,7 +38,7 @@ object OptionExample {
       user <- getGithubUser("beraboris")
       repo <- getMostPopularRepository(user)
       contributor <- getBiggestContributor(repo)
-    } yield s"$user/$repo: $contributor"
+    } yield s"${repo.owner.name}/${repo.name}: ${contributor.name}"
 
     println("And the winner is...")
     println(biggestContributor)
