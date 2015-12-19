@@ -14,8 +14,11 @@ object OptionExample {
   } yield user
 
   def getMostPopularRepository(user: GithubUser): Option[GithubRepository] = for {
+    // Make request to gh
     json <- getResponseBody(GithubClient.repos(user.name))
+    // Parse json
     repos <- json.decodeOption[List[GithubRepository]]
+    // Find the most popular repo in the list
     mostPopularRepo <- repos.reduceLeftOption((best, curr) => if (curr.stars > best.stars) curr else best)
   } yield mostPopularRepo
 
