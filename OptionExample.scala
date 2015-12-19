@@ -31,11 +31,11 @@ object OptionExample {
     biggestContributor <- contributors.reduceLeftOption((best, curr) => if (curr.contributions > best.contributions) curr else best)
   } yield biggestContributor
 
-  def run() {
-    println("Looking for the biggest contibutor using Option")
+  def run(user: String) {
+    println(s"Looking for the biggest contibutor of $user's most popular repostiory using Option")
 
     val biggestContributor = for {
-      user <- getGithubUser("beraboris")
+      user <- getGithubUser(user)
       repo <- getMostPopularRepository(user)
       contributor <- getBiggestContributor(repo)
     } yield s"${repo.owner.name}/${repo.name}: ${contributor.name}"
