@@ -6,24 +6,17 @@ import GithubConversions._
 import argonaut._, Argonaut._
 
 object OptionExample {
-  def getGithubUser(name: String): Option[GithubUser] = {
-    // If we get a 200, we wrap the body string in Option,
-    // otherwise we return nothing
-    val maybeJson = GithubClient.user(name) match {
-      case GithubResponse(200, body) => Some(body)
-      case _ => None
-    }
-
+  def getGithubUser(name: String): Option[GithubUser] = for {
+    // make request to gh
+    json <- getResponseBody(GithubClient.user(name))
     // parse json
-    for {
-      json <- maybeJson
-      user <- json.decodeOption[GithubUser]
-    } yield user
-  }
+    user <- json.decodeOption[GithubUser]
+  } yield user
 
-  def getMostPopularRepository(user: GithubUser): Option[GithubRepository] = {
-    None
-  }
+  def getMostPopularRepository(user: GithubUser): Option[GithubRepository] = for {
+    json <- getResponseBody(GithubClient.repos(user.name))
+    repos <- json.decodeOption[List[GithubRepository]]
+  } yield repos.maxBy(_.stars)
 
   def getBiggestContributor(repository: GithubRepository): Option[GithubUser] = {
     None
@@ -40,5 +33,10 @@ object OptionExample {
 
     println("And the winner is...")
     println(biggestContributor)
+  }
+
+  private def getResponseBody(response: GithubResponse) = response match {
+    case GithubResponse(200, body) => Some(body)
+    case _ => None
   }
 }

@@ -16,6 +16,9 @@ object GithubClient {
   /** Fetch a user by name */
   def user(userName: String) = get(s"$baseUri/users/$userName")
 
+  /** Fetch all repositories for a given user */
+  def repos(userName: String) = get(s"$baseUri/users/$userName/repos")
+
   private def get(uri: String) = execute(Request.Get(uri))
 
   private def execute(request: Request) = {
