@@ -7,7 +7,7 @@ Either, Eventually (Future), and Collection monads.
 These examples were written in combination with a blog article I wrote
 explaining monads. (TODO: add article url) The article itself looks into the
 high level concepts and does not go into examples. This repository is meant to
-serve as an example for the article.
+serve as a set examples for the article.
 
 Using the examples
 ------------------
