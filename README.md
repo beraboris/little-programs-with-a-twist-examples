@@ -4,6 +4,10 @@ Little programs with a twist
 This is a set of hopefully realistic examples that show the usage of the Option,
 Either, Eventually (Future), and Collection monads.
 
+In these examples, we use the GitHub api to find the top contributor of a user's
+most popular repository. We do this using monadic expressions and the monads
+mentioned earlier.
+
 These examples were written in combination with a blog article I wrote
 explaining monads. (TODO: add article url) The article itself looks into the
 high level concepts and does not go into examples. This repository is meant to
