@@ -24,14 +24,14 @@ By default the Either monad implemented by scalaz has a right bias. This means
 that the monadic expression will keep on going on as long as we're dealing with
 the right type and it will stop when we get the left type.
 
-The scalaz Either monad as some strange syntax that I should expmain. The either
-type is represented using \/. For example A \/ B means Either A or B where A is
-the left type and B is the right type. The left and right type have their own
-special syntax. -\/ stands for the left type and \/- stands for the right type.
-Because we're dealing with a monad, we have to wrap values into the monad. For
-example: -\/("foo") represents the string "foo" wrapped into either as the left
-type. Similarly, \/-("foo") represents the string "foo" wrapped into either as
-the right type.
+The scalaz Either monad has some strange syntax that I should expmain. The
+either type is represented using \/. For example A \/ B means Either A or B
+where A is the left type and B is the right type. The left and right type have
+their own special syntax. -\/ stands for the left type and \/- stands for the
+right type. Because we're dealing with a monad, we have to wrap values into the
+monad. For example: -\/("foo") represents the string "foo" wrapped into either
+as the left type. Similarly, \/-("foo") represents the string "foo" wrapped into
+either as the right type. 
 */
 
 object EitherExample {
