@@ -1,3 +1,6 @@
+# autotags
+.tags
+.autotags.pid
 
 # Created by https://www.gitignore.io/api/sbt
 
