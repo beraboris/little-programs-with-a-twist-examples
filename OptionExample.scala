@@ -3,6 +3,7 @@ package littleprograms
 import littleprograms._
 import GithubConversions._
 
+// Library used to decode json strings into scala classes
 import argonaut._, Argonaut._
 
 object OptionExample {
@@ -31,6 +32,16 @@ object OptionExample {
     biggestContributor <- contributors.reduceLeftOption((best, curr) => if (curr.contributions > best.contributions) curr else best)
   } yield biggestContributor
 
+  /**
+  Fetch the biggest contributor of a github user's most popular repository
+
+  There are two possible results here.
+  If we found what we were looking for
+  we return Some("user/repo: biggestContributor")
+
+  If there were any problems: (user missing, repo missing, contributor missing,
+  http error, etc.) we return None
+  */
   def run(user: String) {
     println(s"Looking for the biggest contributor of $user's most popular repository using Option")
 
@@ -44,6 +55,12 @@ object OptionExample {
     println(biggestContributor)
   }
 
+  /**
+  Converts a GithubResponse to and Option[String]
+
+  If the response has a 200 status code we return Some(body) otherwise we
+  return None
+  */
   private def getResponseBody(response: GithubResponse) = response match {
     case GithubResponse(200, body) => Some(body)
     case _ => None
