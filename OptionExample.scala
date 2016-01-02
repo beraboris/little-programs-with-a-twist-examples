@@ -32,7 +32,7 @@ object OptionExample {
   } yield biggestContributor
 
   def run(user: String) {
-    println(s"Looking for the biggest contibutor of $user's most popular repostiory using Option")
+    println(s"Looking for the biggest contributor of $user's most popular repository using Option")
 
     val biggestContributor = for {
       user <- getGithubUser(user)
