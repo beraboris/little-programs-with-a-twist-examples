@@ -7,5 +7,6 @@ object App {
     val user = args.headOption.getOrElse("dotboris")
     OptionExample.run(user)
     EitherExample.run(user)
+    FutureExample.run(user)
   }
 }
